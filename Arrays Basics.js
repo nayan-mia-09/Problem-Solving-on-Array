@@ -58,3 +58,35 @@ if(position2 == -1){
     console.log(`Element founded in this index ${position2}`);
 }
 
+
+
+// binary search in sorted array
+
+function binarySearch(arr3, low, high , target3){
+    if(high < low){
+        return -1;
+    }
+
+    let mid = Math.trunc((low + high) / 2);
+    if(target3 === arr3[mid]){
+        return mid;
+    }
+
+    if(target3 > arr3[mid]){
+        return binarySearch(arr3 , (mid +1), high, target3)
+    }
+    return binarySearch(arr3 , low, (mid - 1), target3)
+}
+
+
+ // Driver program
+
+ let arr3 = [12,14,16,18,20,22,24,26,28,30,32]
+
+ let n3 = arr3.length;
+
+ let target3 = 22;
+
+ let position3 = binarySearch(arr3, 0 , n3 - 1, target3);
+
+ console.log(`Value founded in this index ${position3}`);
