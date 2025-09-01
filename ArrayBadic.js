@@ -78,3 +78,52 @@ if(result == - 1){
 }else{
     console.log(`Value found at this index ${result}`)
 }
+
+
+// Reverse Array
+
+let array2 = [5,6,7,8,9];
+console.log(`Orginal array : ${array2}`);
+
+array2.reverse(); // Built-in method
+console.log(`Reversed array : ${array2}`)
+
+
+// Reverse Array Function 
+
+function reverseArray (arr3){
+    let left = 0;
+    let right = arr3.length;
+
+    while(left < right){
+        // array swap 
+
+        [arr3[left], arr3[right]] = [arr3[right], arr3[left]];
+
+        left ++;
+        right --;
+    }
+    return arr3;
+}
+
+let arr3 = [1,2,3,4,5,6];
+console.log(`Orginal Array : ${arr3}`);
+
+console.log(`Reversed Array : ${reverseArray(arr3)}`);
+
+
+// 01
+
+const name = ["Rahim" , "Karim" , "Dorim", "Sofik"];
+console.log(`Orginal Name Array : ${name}`);
+
+const nameReversed = name.reverse();
+console.log(`Reversed Name Array : ${nameReversed}`);
+
+// 02
+
+let items = ["Red", "Blue", "Green", "Yellow", "Violet", "Sky-Blue", "White"];
+console.log(`Orginal Items Array : ${items}`);
+
+let itemsReversed = items.reverse();
+console.log(`Reversed Items Array : ${itemsReversed}`);
