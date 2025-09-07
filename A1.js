@@ -1,131 +1,118 @@
-// Linear Search Function
+// Second Largest Element in an Array
+// [Naive Approach] Using Sorting 1
 
-function LinearSearch (arr, target){
+/*The idea is to sort the array in non-decreasing order. Now, we know that the largest element will be at index n - 1. So, starting from index (n - 2), traverse the remaining array in reverse order. As soon as we encounter an element which is not equal to the largest element, return it as the second largest element in the array. If all the elements are equal to the largest element, return -1.*/
 
-  // Loop through the entire array
 
-    for(let i = 0; i < arr.length; i ++){
-        // Check if current element matches the target
-        if(arr[i] === target){
+// function to find the second largest element
 
-            return i;  // If match found, return the index
+function getSecondLargestNum(arr){
+  let n = arr.length;
+
+  // Sort the array in non-decreasing order
+  arr.sort((a,b) => a - b);
+
+  // start from second last element as last element is the largest
+  for(let i = n -2; i >= 0; i --){
+    if(arr[i] !== arr[n - 1]){
+        return arr[i];
+    }
+  }
+  // If no second largest element was found, return -1
+  return -1;
+}
+
+const arr = [21,36,18,20,26,30]
+console.log(getSecondLargestNum(arr));
+
+// Output:30
+/*Time Complexity: O(n*log(n)), as sorting the array takes O(n*log(n)) time and traversing the array can take O(n) time in the worst case, so total time complexity = (n*log(n) + n) = O(n*log(n)).
+Auxiliary space: O(1), as no extra space is required.*/
+
+
+// [Better Approach] Two Pass Search 2
+/*The approach is to traverse the array twice. In the first traversal, find the maximum element. In the second traversal, find the maximum element ignoring the one we found in the first traversal.*/
+
+
+// JavaScript program to find the second largest element in the array
+// using two traversals
+
+function findSecondLargest(arr1){
+    let n = arr1.length;
+
+    let largest = -Infinity;
+    let secondLargest = -Infinity;
+
+    // Finding the largest element
+    for(let i = 0; i < n ; i ++){
+        
+        if(arr1[i] > largest){
+            largest = arr1[i];
         }
     }
 
-    return -1;  // If not found, return -1
-}
+     // Finding the second largest element
+    for(let i = 0; i < n ; i ++){
 
-
-// Sample array to search in
-
-let arr = [5,10,15,20,25,30,35,40];
-
-// Target value to search for
-let target = 30;
-
-// Calling the linear search function
-let position = LinearSearch(arr, target);
-
-// Output the result
-if( position == -1){
-     console.log(`Elemnt on Found !`)
-} else {
-   
-    console.log(`Element found at this index : ${position}`)
-}
-
-
-// Binary Search Function
-
-function binarySearch(array , tValue){
-
-     // Set the initial left and right pointers
-    let left = 0;
-    let right = array.length - 1;
-
-     // Continue searching while left pointer is less than or equal to right
-    while(left <= right){
-
-         // Calculate the middle index
-        let mid = Math.floor((left + right) / 2);
-
-         // Check if the middle element is equal to the target value
-        if(array[mid] == tValue){
-            return mid; // Target found, return index
-        }else if(array[mid] < tValue){
-             // If target is greater, ignore the left half
-            left = mid + 1;
-        }else{
-             // If target is smaller, ignore the right half
-            right = mid - 1;
+        // Update second largest if the current element is greater
+        // than second largest and not equal to the largest
+        if(arr1[i] > secondLargest && arr1[i] !== largest){
+            secondLargest = arr1[i];
         }
     }
-    return - 1; // Target not found
+    return secondLargest;
 }
 
-// Sample sorted array
-let array = [10,15,20,30,35,40,45,50,55,60];
+let arr1 = [21,36,18,20,26,30];
 
-// Target value to search for
-let tValue = 35;
+console.log(findSecondLargest(arr1));
 
-// Call binary search function
-let result = binarySearch(array, tValue);
-
-// Output the result
-if(result == - 1){
-    console.log(`Value not found`);
-}else{
-    console.log(`Value found at this index ${result}`)
-}
+// output: 30
+/* Time Complexity: O(2*n) = O(n), as we are traversing the array two times.
+Auxiliary space: O(1), as no extra space is required */
 
 
-// Reverse Array
 
-let array2 = [5,6,7,8,9];
-console.log(`Orginal array : ${array2}`);
+//[Expected Approach] One Pass Search 3
 
-array2.reverse(); // Built-in method
-console.log(`Reversed array : ${array2}`)
+/* The idea is to keep track of the largest and second largest element while traversing the array. Initialize largest and secondLargest with -1. Now, for any index i,
+
+If arr[i] > largest, update secondLargest with largest and largest with arr[i].
+Else If arr[i] < largest and arr[i] > secondLargest, update secondLargest with arr[i]. */
 
 
-// Reverse Array Function 
+// JavaScript program to find the second largest element in the array
+// using one traversal
 
-function reverseArray (arr3){
-    let left = 0;
-    let right = arr3.length;
+// function to find the second largest element in the array
 
-    while(left < right){
-        // array swap 
+function find2ndLargest(arr2){
+    let n = arr2.length;
 
-        [arr3[left], arr3[right]] = [arr3[right], arr3[left]];
+    let largest = -Infinity;
+    let secondLargest = -Infinity;
+// finding the second largest element
+    for(let i = 0; i < n ; i ++){
 
-        left ++;
-        right --;
+        // If arr[i] > largest, update second largest with
+        // largest and largest with arr[i]
+        if(arr2[i] > largest){
+            secondLargest = largest;
+            largest = arr2[i];
+
+        }
+         // If arr[i] < largest and arr[i] > second largest, 
+        // update second largest with arr[i]
+        else if(arr2[i] < largest && arr2[i] > secondLargest){
+            secondLargest = arr2[i]
+        }
     }
-    return arr3;
+    return secondLargest;
 }
 
-let arr3 = [1,2,3,4,5,6];
-console.log(`Orginal Array : ${arr3}`);
+let arr2 = [21,36,18,20,26,30];
+console.log(find2ndLargest(arr2));
 
-console.log(`Reversed Array : ${reverseArray(arr3)}`);
-
-
-// 01
-
-const name = ["Rahim" , "Karim" , "Dorim", "Sofik"];
-console.log(`Orginal Name Array : ${name}`);
-
-const nameReversed = name.reverse();
-console.log(`Reversed Name Array : ${nameReversed}`);
-
-// 02
-
-let items = ["Red", "Blue", "Green", "Yellow", "Violet", "Sky-Blue", "White"];
-console.log(`Orginal Items Array : ${items}`);
-
-let itemsReversed = items.reverse();
-console.log(`Reversed Items Array : ${itemsReversed}`);
-
-
+// output: 30
+/* Time Complexity: O(n), as we are traversing the array only once.
+Auxiliary space: O(1) */
